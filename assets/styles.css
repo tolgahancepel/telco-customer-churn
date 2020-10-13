@@ -1,0 +1,139 @@
+html,body{
+    overflow-x: hidden;
+}
+
+#mainContainer {
+  display: flex;
+  flex-direction: column;
+  margin: 0% 2%;
+}
+
+.bg-primary {
+    background-color: #272953 !important;
+}
+
+body {
+  background-color: #16103a;
+}
+
+.container, .container-lg, .container-md, .container-sm, .container-xl {
+    max-width: 1340px !important;
+}
+
+.card-body {
+    padding: 0.75rem;
+    /*background-color: #272953; */
+}
+
+.nav-tabs .nav-link {
+    color: #e0e1e6 !important;
+    border:none !important;
+    cursor: pointer;
+    border-radius: 20px;
+}
+
+.nav-tabs {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    border-bottom: none;
+}
+
+.nav-tabs .nav-link:focus, .nav-tabs .nav-link:hover {
+    background-color: #272953;
+    border:none;
+
+}
+
+
+@media (max-width: 768px) {
+    .col-sm-12 {
+        padding-bottom: 20px;
+    }
+
+    .card-padding {
+        padding-bottom: 4vh;
+    }
+
+}
+
+@media (min-width: 768px) {
+    .feature-row {
+        padding-bottom: 4vh;
+    }
+
+    
+
+}
+
+
+
+
+.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
+    background-color: #c54439 !important;
+    border:none;
+}
+
+.custom-select {
+    background-color: #16103a;
+    color: #e0e1e6;
+}
+
+.nav-tabs .nav-item {
+    margin-inline: 5px;
+}
+
+.mb-5 {
+    margin-bottom: 0rem !important;
+}
+
+.cover {
+    background-color: #272953;
+    
+    text-align: center;
+    background-image: url("cover.png");
+    /* background-image: linear-gradient(#16103a, #0f1021);  */
+    background-color: #16103a;
+    background-size: 110%;
+    background-position: center;
+    background-repeat: repeat-x;
+}
+
+.footer {
+    text-align: center;
+    background-color: #16103a;
+    color: rgba(190, 190, 190, 0.75);
+    margin: 2rem 0rem;
+}
+
+
+.customer-img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 2vh;
+    height: 42vh;
+}
+
+.btn-predict {
+    background-color: #206a5d;
+}
+
+.result-card {
+    background-color: #16103a;
+    text-align: center;
+}
+
+
+
+
+
+
+
+
+
+
+
+._dash-loading {
+    text-indent: -9999em;
+  }
