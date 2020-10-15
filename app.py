@@ -3,6 +3,7 @@ import dash_bootstrap_components as dbc
 import dash_html_components as html
 import dash_core_components as dcc
 from dash.dependencies import Input, Output, State
+from dash import no_update
 
 import pandas as pd
 import plotly.express as px
@@ -14,7 +15,7 @@ import copy
 import time
 
 from src.navbar import get_navbar
-from src.graphs import df, layout
+from src.graphs import df, layout, ohe, cat_features, svm_model, xgb_model
 from content import tab_prediction_content, tab_analysis_content
 
 # Creating the app
@@ -56,12 +57,12 @@ jumbotron = dbc.Jumbotron(
 app.layout = html.Div(
     [
         get_navbar(),
-
         jumbotron,
-
         html.Div(
             [
+                
                 dbc.Row(dbc.Col(tabs, width=12)),
+                
             ], id="mainContainer",style={"display": "flex", "flex-direction": "column"}
         ),
 
@@ -129,14 +130,89 @@ def donut_categorical(feature):
     
     _title = (feature[0].upper() + feature[1:]) + " Percentage"
 
+    if(df[feature].nunique() == 2):
+        _x = 0.3
+    elif(df[feature].nunique() == 3):
+        _x = 0.16
+    else:
+        _x = 0
+
     fig.update_layout(
         title = {'text': _title, 'x': 0.5},
-        legend = {'x': 0.24}
+        legend = {'x': _x}
     )
+
+
 
     return fig
 
 
+# Prediction
+
+@app.callback(
+    [dash.dependencies.Output('svm_result', 'children'),
+     dash.dependencies.Output('xgb_result', 'children')],
+
+    [dash.dependencies.Input('btn_predict', 'n_clicks')],
+
+    [dash.dependencies.State('ft_gender', 'value'),
+     dash.dependencies.State('ft_partner', 'value'),
+     dash.dependencies.State('ft_dependents', 'value'),
+     dash.dependencies.State('ft_phoneService', 'value'),
+     dash.dependencies.State('ft_multipleLines', 'value'),
+     dash.dependencies.State('ft_internetService', 'value'),
+     dash.dependencies.State('ft_onlineSecurity', 'value'),
+     dash.dependencies.State('ft_onlineBackup', 'value'),
+     dash.dependencies.State('ft_deviceProtection', 'value'),
+     dash.dependencies.State('ft_techSupport', 'value'),
+     dash.dependencies.State('ft_streamingTv', 'value'),
+     dash.dependencies.State('ft_streamingMovies', 'value'),
+     dash.dependencies.State('ft_contract', 'value'),
+     dash.dependencies.State('ft_paperlessBilling', 'value'),
+     dash.dependencies.State('ft_paymentMethod', 'value'),
+     dash.dependencies.State('ft_seniorCitizen', 'value'),
+     dash.dependencies.State('ft_monthlyCharges', 'value'),
+     dash.dependencies.State('ft_totalCharges', 'value'),
+     dash.dependencies.State('ft_tenure', 'value')]
+)
+
+def predict_churn(n_clicks, ft_gender, ft_partner, ft_dependents, ft_phoneService, ft_multipleLines,
+                            ft_internetService, ft_onlineSecurity, ft_onlineBackup, ft_deviceProtection,
+                            ft_techSupport, ft_streamingTv, ft_streamingMovies, ft_contract,
+                            ft_paperlessBilling, ft_paymentMehod, ft_seniorCitizen, ft_monthlyCharges,
+                            ft_totalCharges, ft_tenure):
+
+    time.sleep(0.4)
+
+    sample = {'gender': ft_gender, 'Partner': ft_partner, 'Dependents': ft_dependents,
+              'PhoneService': ft_phoneService, 'MultipleLines': ft_multipleLines,
+              'InternetService': ft_internetService, 'OnlineSecurity': ft_onlineSecurity, 'OnlineBackup': ft_onlineBackup,
+              'DeviceProtection': ft_deviceProtection, 'TechSupport': ft_techSupport, 'StreamingTV': ft_streamingTv,
+              'StreamingMovies': ft_streamingMovies, 'Contract': ft_contract, 'PaperlessBilling': ft_paperlessBilling,
+              'PaymentMethod': ft_paymentMehod, 'TotalCharges': float(ft_totalCharges), 'MonthlyCharges': float(ft_monthlyCharges),
+              'tenure': int(ft_tenure), 'SeniorCitizen': int(ft_seniorCitizen)}
+
+    sample_df = pd.DataFrame(sample, index=[0])
+    sample_df_enc = ohe.transform(sample_df[cat_features])
+    sample_df_enc = pd.DataFrame(sample_df_enc)
+
+    sample_df_enc = pd.concat([sample_df_enc, sample_df[['SeniorCitizen', 'MonthlyCharges', 'TotalCharges', 'tenure']]], axis=1)
+
+    svm_prediction = svm_model.predict(sample_df_enc)
+    xgb_prediction = xgb_model.predict(sample_df_enc)
+
+    def churn_to_text(num):
+        if(num == 0):
+            return "Predicted: Not Churn"
+        elif(num == 1):
+            return "Predicted: Churn"
+
+    # print(svm_prediction)
+
+    if(n_clicks):
+        return churn_to_text(xgb_prediction), churn_to_text(svm_prediction)
+    else:
+        return no_update
 
 @app.callback(
     Output("navbar-collapse", "is_open"),
@@ -149,9 +225,6 @@ def toggle_navbar_collapse(n, is_open):
     if n:
         return not is_open
     return is_open
-
-
-
 
 
 if __name__ == "__main__":

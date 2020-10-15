@@ -87,63 +87,63 @@ card_donut = dbc.Card(
 
 # TABS
 
-tab_analysis_content = [
+tab_graphs = [
 
     # Categorical Fetaures Visualization
+        dbc.Card(
+            dbc.CardBody(
+                [
+                    dbc.Row(
+                        [
 
-    dbc.Card(
-        dbc.CardBody(
-            [
-                dbc.Row(
-                    [
+                            dbc.Col([
+                                dbc.InputGroup(
+                                    [
+                                        dbc.InputGroupAddon("Categorical Feature", addon_type="prepend"),
+                                        dbc.Select(
+                                            options=[
+                                                {"label": "Gender", "value": "gender"},
+                                                {"label": "Partner", "value": "Partner"},
+                                                {"label": "Dependents", "value": "Dependents"},
+                                                {"label": "Phone Service", "value": "PhoneService"},
+                                                {"label": "Multiple Lines", "value": "MultipleLines"},
+                                                {"label": "Internet Service", "value": "InternetService"},
+                                                {"label": "Online Security", "value": "OnlineSecurity"},
+                                                {"label": "Online Backup", "value": "OnlineBackup"},
+                                                {"label": "Device Protection", "value": "DeviceProtection"},
+                                                {"label": "Tech Support", "value": "TechSupport"},
+                                                {"label": "Streaming TV", "value": "StreamingTV"},
+                                                {"label": "Streaming Movies", "value": "StreamingMovies"},
+                                                {"label": "Contract", "value": "Contract"},
+                                                {"label": "Paperless Billing", "value": "PaperlessBilling"},
+                                                {"label": "Payment Method", "value": "PaymentMethod"},
+                                                {"label": "Senior Citizen", "value": "SeniorCitizen"},
+                            
+                                            ], id = "categorical_dropdown", value="gender"
+                                        )
+                                    ]
+                                ),
 
-                        dbc.Col([
-                            dbc.InputGroup(
-                                [
-                                    dbc.InputGroupAddon("Categorical Feature", addon_type="prepend"),
-                                    dbc.Select(
-                                        options=[
-                                            {"label": "Gender", "value": "gender"},
-                                            {"label": "Partner", "value": "Partner"},
-                                            {"label": "Dependents", "value": "Dependents"},
-                                            {"label": "Phone Service", "value": "PhoneService"},
-                                            {"label": "Multiple Lines", "value": "MultipleLines"},
-                                            {"label": "Internet Service", "value": "InternetService"},
-                                            {"label": "Online Security", "value": "OnlineSecurity"},
-                                            {"label": "Online Backup", "value": "OnlineBackup"},
-                                            {"label": "Device Protection", "value": "DeviceProtection"},
-                                            {"label": "Tech Support", "value": "TechSupport"},
-                                            {"label": "Streaming TV", "value": "StreamingTV"},
-                                            {"label": "Streaming Movies", "value": "StreamingMovies"},
-                                            {"label": "Contract", "value": "Contract"},
-                                            {"label": "Paperless Billing", "value": "PaperlessBilling"},
-                                            {"label": "Payment Method", "value": "PaymentMethod"},
-                        
-                                        ], id = "categorical_dropdown", value="gender"
-                                    )
-                                ]
+
+                                html.Img(src="../assets/customer.png", className="customer-img")
+                                
+                                
+                                ],lg="4", sm=12,
                             ),
 
 
-                            html.Img(src="../assets/customer.png", className="customer-img")
-                            
-                            
-                            ],lg="4", sm=12,
-                        ),
+                            dbc.Col(card_donut, lg="4", sm=12),
 
+                            # dbc.Spinner(id="loading2",size="md", color="light",children=[dbc.Col(card_categorical, lg="4", sm=12)]),
 
-                        dbc.Col(card_donut, lg="4", sm=12),
+                            dbc.Col(card_categorical, lg="4", sm=12),
 
-                        # dbc.Spinner(id="loading2",size="md", color="light",children=[dbc.Col(card_categorical, lg="4", sm=12)]),
-
-                        dbc.Col(card_categorical, lg="4", sm=12),
-
-                    ], className="h-15", style={"height": "100%"}
-                )
-            ]
+                        ], className="h-15", style={"height": "100%"}
+                    )
+                ]
+            ),
+            className="mt-3", style = {"background-color": "#272953"}
         ),
-        className="mt-3", style = {"background-color": "#272953"}
-    ),
 
     # Tensure, MonthlyCharges and TotalCharges Visualizaion
 
@@ -164,6 +164,9 @@ tab_analysis_content = [
 
 ]
 
+tab_analysis_content = tab_graphs
+
+
 # PREDICTION
 
 tab_prediction_features = dbc.Card(
@@ -179,10 +182,11 @@ tab_prediction_features = dbc.Card(
                                 [
                                     dbc.InputGroupAddon("Gender", addon_type="prepend"),
                                     dbc.Select(
+                                        id="ft_gender",
                                         options=[
-                                            {"label": "Female", "value": "female"},
-                                            {"label": "Male", "value": "male"},
-                                        ], value="female"
+                                            {"label": "Female", "value": "Female"},
+                                            {"label": "Male", "value": "Male"},
+                                        ], value="Male"
                                     )
                                 ]
                             )
@@ -197,10 +201,11 @@ tab_prediction_features = dbc.Card(
                                 [
                                     dbc.InputGroupAddon("Partner", addon_type="prepend"),
                                     dbc.Select(
+                                        id="ft_partner",
                                         options=[
-                                            {"label": "Yes", "value": "yes"},
-                                            {"label": "No", "value": "no"},
-                                        ], value="yes"
+                                            {"label": "Yes", "value": "Yes"},
+                                            {"label": "No", "value": "No"},
+                                        ], value="Yes"
                                     )
                                 ]
                             )
@@ -215,10 +220,11 @@ tab_prediction_features = dbc.Card(
                                 [
                                     dbc.InputGroupAddon("Dependents", addon_type="prepend"),
                                     dbc.Select(
+                                        id="ft_dependents",
                                         options=[
-                                            {"label": "Yes", "value": "yes"},
-                                            {"label": "No", "value": "no"},
-                                        ], value="yes"
+                                            {"label": "Yes", "value": "Yes"},
+                                            {"label": "No", "value": "No"},
+                                        ], value="No"
                                     )
                                 ]
                             )
@@ -233,10 +239,11 @@ tab_prediction_features = dbc.Card(
                                 [
                                     dbc.InputGroupAddon("Phone Service", addon_type="prepend"),
                                     dbc.Select(
+                                        id="ft_phoneService",
                                         options=[
-                                            {"label": "Yes", "value": "yes"},
-                                            {"label": "No", "value": "no"},
-                                        ], value="yes"
+                                            {"label": "Yes", "value": "Yes"},
+                                            {"label": "No", "value": "No"},
+                                        ], value="Yes"
                                     )
                                 ]
                             )
@@ -257,11 +264,12 @@ tab_prediction_features = dbc.Card(
                                 [
                                     dbc.InputGroupAddon("Multiple Lines", addon_type="prepend"),
                                     dbc.Select(
+                                        id="ft_multipleLines",
                                         options=[
                                             {"label": "Yes", "value": "Yes"},
-                                            {"label": "No", "value": "no"},
-                                            {"label": "No phone service", "value": "nps"},
-                                        ], value="yes"
+                                            {"label": "No", "value": "No"},
+                                            {"label": "No phone service", "value": "No phone service"},
+                                        ], value="Yes"
                                     )
                                 ]
                             )
@@ -276,11 +284,12 @@ tab_prediction_features = dbc.Card(
                                 [
                                     dbc.InputGroupAddon("Internet Service", addon_type="prepend"),
                                     dbc.Select(
+                                        id="ft_internetService",
                                         options=[
-                                            {"label": "Fiber optic", "value": "fiberoptic"},
-                                            {"label": "DSL", "value": "dsl"},
-                                            {"label": "No", "value": "no"},
-                                        ], value="fiberoptic"
+                                            {"label": "Fiber optic", "value": "Fiber optic"},
+                                            {"label": "DSL", "value": "DSL"},
+                                            {"label": "No", "value": "No"},
+                                        ], value="Fiber optic"
                                     )
                                 ]
                             )
@@ -295,11 +304,12 @@ tab_prediction_features = dbc.Card(
                                 [
                                     dbc.InputGroupAddon("Online Security", addon_type="prepend"),
                                     dbc.Select(
+                                        id="ft_onlineSecurity",
                                         options=[
                                             {"label": "Yes", "value": "Yes"},
-                                            {"label": "No", "value": "no"},
-                                            {"label": "No internet service", "value": "nis"},
-                                        ], value="yes"
+                                            {"label": "No", "value": "No"},
+                                            {"label": "No internet service", "value": "No internet service"},
+                                        ], value="No"
                                     )
                                 ]
                             )
@@ -314,11 +324,12 @@ tab_prediction_features = dbc.Card(
                                 [
                                     dbc.InputGroupAddon("Online Backup", addon_type="prepend"),
                                     dbc.Select(
+                                        id="ft_onlineBackup",
                                         options=[
                                             {"label": "Yes", "value": "Yes"},
-                                            {"label": "No", "value": "no"},
-                                            {"label": "No internet service", "value": "nis"},
-                                        ], value="yes"
+                                            {"label": "No", "value": "No"},
+                                            {"label": "No internet service", "value": "No internet service"},
+                                        ], value="No"
                                     )
                                 ]
                             )
@@ -339,11 +350,12 @@ tab_prediction_features = dbc.Card(
                                 [
                                     dbc.InputGroupAddon("Device Protection", addon_type="prepend"),
                                     dbc.Select(
+                                        id="ft_deviceProtection",
                                         options=[
                                             {"label": "Yes", "value": "Yes"},
-                                            {"label": "No", "value": "no"},
-                                            {"label": "No internet service", "value": "nis"},
-                                        ], value="yes"
+                                            {"label": "No", "value": "No"},
+                                            {"label": "No internet service", "value": "No internet service"},
+                                        ], value="No"
                                     )
                                 ]
                             )
@@ -358,11 +370,12 @@ tab_prediction_features = dbc.Card(
                                 [
                                     dbc.InputGroupAddon("Tech Support", addon_type="prepend"),
                                     dbc.Select(
+                                        id="ft_techSupport",
                                         options=[
                                             {"label": "Yes", "value": "Yes"},
-                                            {"label": "No", "value": "no"},
-                                            {"label": "No internet service", "value": "nis"},
-                                        ], value="yes"
+                                            {"label": "No", "value": "No"},
+                                            {"label": "No internet service", "value": "No internet service"},
+                                        ], value="No"
                                     )
                                 ]
                             )
@@ -377,11 +390,12 @@ tab_prediction_features = dbc.Card(
                                 [
                                     dbc.InputGroupAddon("Streaming TV", addon_type="prepend"),
                                     dbc.Select(
+                                        id="ft_streamingTv",
                                         options=[
                                             {"label": "Yes", "value": "Yes"},
-                                            {"label": "No", "value": "no"},
-                                            {"label": "No internet service", "value": "nis"},
-                                        ], value="yes"
+                                            {"label": "No", "value": "No"},
+                                            {"label": "No internet service", "value": "No internet service"},
+                                        ], value="No"
                                     )
                                 ]
                             )
@@ -396,18 +410,160 @@ tab_prediction_features = dbc.Card(
                                 [
                                     dbc.InputGroupAddon("Streaming Movies", addon_type="prepend"),
                                     dbc.Select(
+                                        id="ft_streamingMovies",
                                         options=[
                                             {"label": "Yes", "value": "Yes"},
-                                            {"label": "No", "value": "no"},
-                                            {"label": "No internet service", "value": "nis"},
-                                        ], value="yes"
+                                            {"label": "No", "value": "No"},
+                                            {"label": "No internet service", "value": "No internet service"},
+                                        ], value="No"
                                     )
                                 ]
                             )
                         ], lg="3", sm=12
                     )
-                ]
+                ], className="feature-row",
             ),
+
+            # Fourth Row
+
+            dbc.Row(
+                [
+                    # Contract
+
+                    dbc.Col(
+                        [
+                            dbc.InputGroup(
+                                [
+                                    dbc.InputGroupAddon("Contract", addon_type="prepend"),
+                                    dbc.Select(
+                                        id="ft_contract",
+                                        options=[
+                                            {"label": "Month-to-month", "value": "Month-to-month"},
+                                            {"label": "One year", "value": "One year"},
+                                            {"label": "Two year", "value": "Two year"},
+                                        ], value="Month-to-month"
+                                    )
+                                ]
+                            )
+                        ], lg="3", sm=12
+                    ),
+
+
+                    # PaperlessBilling
+
+                    dbc.Col(
+                        [
+                            dbc.InputGroup(
+                                [
+                                    dbc.InputGroupAddon("Paperless Billing", addon_type="prepend"),
+                                    dbc.Select(
+                                        id="ft_paperlessBilling",
+                                        options=[
+                                            {"label": "Yes", "value": "Yes"},
+                                            {"label": "No", "value": "No"},
+                                        ], value="Yes"
+                                    )
+                                ]
+                            )
+                        ], lg="3", sm=12
+                    ),
+
+
+                    # PaymentMethod
+
+                    dbc.Col(
+                        [
+                            dbc.InputGroup(
+                                [
+                                    dbc.InputGroupAddon("Payment Method", addon_type="prepend"),
+                                    dbc.Select(
+                                        id="ft_paymentMethod",
+                                        options=[
+                                            {"label": "Electronic check", "value": "Electronic check"},
+                                            {"label": "Mailed check", "value": "Mailed check"},
+                                            {"label": "Bank transfer (automatic)", "value": "Bank transfer (automatic)"},
+                                            {"label": "Credit card (automatic)", "value": "Credit card (automatic)"}
+                                        ], value="Mailed check"
+                                    )
+                                ]
+                            )
+                        ], lg="3", sm=12
+                    ),
+
+                    # SeniorCitizen
+
+                    dbc.Col(
+                        [
+                            dbc.InputGroup(
+                                [
+                                    dbc.InputGroupAddon("Senior Citizen", addon_type="prepend"),
+                                    dbc.Select(
+                                        id="ft_seniorCitizen",
+                                        options=[
+                                            {"label": "Yes", "value": "1"},
+                                            {"label": "No", "value": "0"}
+                                        ], value="1"
+                                    )
+                                ]
+                            )
+                        ], lg="3", sm=12
+                    ),
+                ], className="feature-row",
+            ),
+
+            # Fifth Row
+
+            dbc.Row(
+                [
+                    # MonhtlyCharges
+
+                    dbc.Col(
+                        [
+                            dbc.InputGroup(
+                                [
+                                    dbc.InputGroupAddon("Monhtly Charges ($)", addon_type="prepend"),
+                                    dbc.Input(
+                                        id="ft_monthlyCharges",
+                                        placeholder="Amount", type="number", value="74.4"
+                                    ),
+                                ]
+                            )
+                        ], lg="3", sm=12
+                    ),
+
+                    # Total Charges
+
+                    dbc.Col(
+                        [
+                            dbc.InputGroup(
+                                [
+                                    dbc.InputGroupAddon("Total Charges ($)", addon_type="prepend"),
+                                    dbc.Input(
+                                        id="ft_totalCharges",
+                                        placeholder="Amount", type="number", value="306.6"
+                                    ),
+                                ]
+                            )
+                        ], lg="3", sm=12
+                    ),
+
+                    # Tenure
+
+                    dbc.Col(
+                        [
+                            dbc.InputGroup(
+                                [
+                                    dbc.InputGroupAddon("Tenure", addon_type="prepend"),
+                                    dbc.Input(
+                                        id="ft_tenure",
+                                        placeholder="Amount", type="number", value="4"
+                                    ),
+                                ]
+                            )
+                        ], lg="3", sm=12
+                    ),
+                ]
+            )
         ]
     ),
     className="mt-3", style = {"background-color": "#272953"}
@@ -420,8 +576,9 @@ tab_prediction_result = dbc.Card(
                 [
                     dbc.Col(
                         [
-                            dbc.Button("Predict", size="lg", className="btn-predict")
-                        ], lg="4", sm=4, style={"text-align": "center"}, className="card-padding"
+                            dbc.Button("Predict", id='btn_predict', size="lg", className="btn-predict")
+                        ], lg="4", sm=4, style={"display": "flex", "align-items":"center", "justify-content":"center"},
+                        className="card-padding"
                     ),
 
                     dbc.Col(
@@ -429,10 +586,10 @@ tab_prediction_result = dbc.Card(
                             dbc.Card(
                                 dbc.CardBody(
                                     [
-                                        html.H4("Prediction: Churn"),
-                                        html.P("LightGBM")
+                                        dbc.Spinner(html.H4(id="xgb_result", children="-", style={'color':'#e7b328'}), size="sm", spinner_style={'margin-bottom': '5px'}),
+                                        html.P("XGBoost")
                                     ]
-                                ), className="result-card",
+                                ), className="result-card", style={"height":"16vh"}
                             )
                         ], lg=4, sm=4, className="card-padding"
                     ),
@@ -442,10 +599,10 @@ tab_prediction_result = dbc.Card(
                             dbc.Card(
                                 dbc.CardBody(
                                     [
-                                        html.H4("Prediction: Churn"),
+                                        dbc.Spinner(html.H4(id="svm_result", children="-", style={'color':'#e7b328'}), size="sm", spinner_style={'margin-bottom': '5px'}),
                                         html.P("SVM")
                                     ]
-                                ), className="result-card",
+                                ), className="result-card", style={"height":"16vh"}
                             )
                         ], lg=4, sm=4, className="card-padding"
                     )
@@ -460,7 +617,9 @@ tab_prediction_result = dbc.Card(
     className="mt-3", style = {"background-color": "#272953"}
 )
 
-tab_prediction_content =[
+tab_prediction_content = [
+    
     tab_prediction_features,
     tab_prediction_result
+    
 ]

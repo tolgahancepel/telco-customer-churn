@@ -5,6 +5,7 @@ import dash_core_components as dcc
 from dash.dependencies import Input, Output, State
 
 import pandas as pd
+import joblib
 import plotly.express as px
 import plotly.figure_factory as ff
 
@@ -24,10 +25,23 @@ layout = dict(
     yaxis_showgrid=False
 )
 
+# Model Read
+svm_path = 'data/svm_model.sav'
+svm_model = joblib.load(svm_path)
+
+xgb_path = 'data/xgb_model.sav'
+xgb_model = joblib.load(xgb_path)
+
 # Data Read
 df = pd.read_csv('data/Telco-Customer-Churn.csv')
 df['TotalCharges'] = df['TotalCharges'].replace(" ", 0).astype('float32')
 
+cat_features = df.drop(['customerID','TotalCharges', 'MonthlyCharges', 'SeniorCitizen', 'tenure', 'Churn'],axis=1).columns
+
+# Encoding categorical features
+from sklearn.preprocessing import OneHotEncoder
+ohe = OneHotEncoder(sparse=False)
+ohe.fit(df[cat_features])
 
 
 def dist_tenure():

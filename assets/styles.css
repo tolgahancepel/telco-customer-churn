@@ -89,7 +89,6 @@ body {
 
 .cover {
     background-color: #272953;
-    
     text-align: center;
     background-image: url("cover.png");
     /* background-image: linear-gradient(#16103a, #0f1021);  */
@@ -128,12 +127,23 @@ body {
 
 
 
+.form-control {
+    background-color: #16103a;
+    color: #e0e1e6;
+}
 
-
-
-
-
-
-._dash-loading {
+/* ._dash-loading {
     text-indent: -9999em;
-  }
+  } */
+
+
+.github-logo {
+    display:inline;
+    width: 24px;
+    margin-right: 5px;
+    padding-bottom: 2px;
+}
+
+a:hover {
+    text-decoration: none;
+}
