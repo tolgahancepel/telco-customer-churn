@@ -1,3 +1,10 @@
+"""
+Telco Customer Churn Prediction: Content for Pages
+"""
+
+# Authors: Tolgahan Cepel <tolgahan.cepel@gmail.com>
+# License: MIT
+
 import dash
 import dash_bootstrap_components as dbc
 import dash_html_components as html
@@ -14,60 +21,54 @@ import copy
 
 from src.graphs import dist_tenure, dist_monthlycharges, dist_totalcharges
 
-
+#-------------------------------------------------------------------------------
 # DATA ANALYSIS
+#-------------------------------------------------------------------------------
+
+# Tenure Distribution
 
 card_tensure = dbc.Card(
-    [
-        dbc.CardBody(
-            [
-                dcc.Graph(figure = dist_tenure(), config = {"displayModeBar": False}, style = {"height": "42vh"})
-            ]
-        ),
-    ],
+    dbc.CardBody(
+        dcc.Graph(figure = dist_tenure(), config = {"displayModeBar": False}, style = {"height": "42vh"})
+    ),
     style = {"background-color": "#16103a"}
 )
+
+# Monthly Charges Distribution
 
 card_monthlycharges = dbc.Card(
-    [
-        dbc.CardBody(
-            [
-                dcc.Graph(figure = dist_monthlycharges(), config = {"displayModeBar": False}, style = {"height": "42vh"})
-                    
-            ]
-        ),
-    ],
+    dbc.CardBody(
+        dcc.Graph(figure = dist_monthlycharges(), config = {"displayModeBar": False}, style = {"height": "42vh"})          
+    ),
     style = {"background-color": "#16103a"}
 )
 
-
+# Total Charges Distribution
 
 card_totalcharges = dbc.Card(
-    [
-        dbc.CardBody(
-            [
-                dcc.Graph(figure = dist_totalcharges(), config = {"displayModeBar": False}, style = {"height": "42vh"})
-            ]
-        ),
-    ],
+    dbc.CardBody(
+        dcc.Graph(figure = dist_totalcharges(), config = {"displayModeBar": False}, style = {"height": "42vh"})
+    ),
     style = {"background-color": "#16103a"}
 )
 
+# Categorical Bar Chart
+
 card_categorical = dbc.Card(
-    [
-        dbc.CardBody(
-            [
-                dbc.Spinner(size="md",color="light",
-                    children=[
-                        dcc.Graph(id="categorical_bar_graph", config = {"displayModeBar": False}, style = {"height": "48vh"})
-                    ]
-                ),
-                
-            ], style = {"height": "52vh"}
+    dbc.CardBody(
+        dbc.Spinner(
+            size="md",
+            color="light",
+            children=[
+                dcc.Graph(id="categorical_bar_graph", config = {"displayModeBar": False}, style = {"height": "48vh"})
+            ]
         ),
-    ],
+        style = {"height": "52vh"}
+    ),
     style = {"background-color": "#16103a"}
 )
+
+# Donut Chart
 
 card_donut = dbc.Card(
     [

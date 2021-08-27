@@ -1,3 +1,10 @@
+"""
+Telco Customer Churn Prediction: Application
+"""
+
+# Authors: Tolgahan Cepel <tolgahan.cepel@gmail.com>
+# License: MIT
+
 import dash
 import dash_bootstrap_components as dbc
 import dash_html_components as html
@@ -14,8 +21,8 @@ import sys
 import copy
 import time
 
-from src.navbar import get_navbar
-from src.graphs import df, layout, ohe, cat_features, svm_model, xgb_model
+from src.navbar import get_navbar   # navbar function
+from src.graphs import df, layout, ohe, cat_features, svm_model, xgb_model  
 from content import tab_prediction_content, tab_analysis_content
 
 # Creating the app
@@ -36,43 +43,35 @@ tabs = dbc.Tabs(
     ]
 )
 
+# Jumbotron
 
 jumbotron = dbc.Jumbotron(
-    [
-        # html.H1("Jumbotron", className="display-3"),
-        # html.P(
-        #     "Use a jumbotron to call attention to "
-        #     "featured content or information.",
-        #     className="lead",
-        # ),
-        # html.Hr(className="my-2"),
-        html.H4("Telco Customer Churn Analysis and Prediction"),
-        # html.P(dbc.Button("Learn more", color="primary"), className="lead"),
-    ], className="cover"
+    html.H4("Telco Customer Churn Analysis and Prediction"),
+    className="cover"
 )
 
-
-# App Layout
+#-------------------------------------------------------------------------------
+# APPLICATION LAYOUT
+#-------------------------------------------------------------------------------
 
 app.layout = html.Div(
     [
         get_navbar(),
         jumbotron,
         html.Div(
-            [
-                
-                dbc.Row(dbc.Col(tabs, width=12)),
-                
-            ], id="mainContainer",style={"display": "flex", "flex-direction": "column"}
+            dbc.Row(dbc.Col(tabs, width=12)),
+            id="mainContainer",
+            style={"display": "flex", "flex-direction": "column"}
         ),
-
         html.P("Developed by Tolgahan Çepel", className="footer")
-
-
     ],
 )
 
-# Callbacks
+#-------------------------------------------------------------------------------
+# CALLBACKS
+#-------------------------------------------------------------------------------
+
+# Data Analysis Tab - Categorical Bar Chart 
 
 @app.callback(
     Output("categorical_bar_graph", "figure"),
@@ -91,6 +90,7 @@ def bar_categorical(feature):
              color=temp['Churn'].map({'Yes': 'Churn', 'No': 'NoChurn'}),
              color_discrete_map={"Churn": "#47acb1", "NoChurn": "#f26522"},
              barmode='group')
+    
     layout_count = copy.deepcopy(layout)
     fig.update_layout(layout_count)
     
@@ -113,17 +113,15 @@ def bar_categorical(feature):
     ],
 )
 
+# Data Analysis Tab - Donut Chart 
+
 def donut_categorical(feature):
 
     time.sleep(0.2)
 
     temp = df.groupby([feature]).count()['customerID'].reset_index()
 
-    fig = px.pie(temp, values="customerID", names=feature, hole=.5,
-                            #color=temp['Churn'].map({'Yes': 'Churn', 'No': 'NoChurn'}),
-                                #color_discrete_map={"Churn": "#47acb1",
-                                                            #"NoChurn": "#f26522"},
-    )
+    fig = px.pie(temp, values="customerID", names=feature, hole=.5)
 
     layout_count = copy.deepcopy(layout)
     fig.update_layout(layout_count)
@@ -142,12 +140,9 @@ def donut_categorical(feature):
         legend = {'x': _x}
     )
 
-
-
     return fig
 
-
-# Prediction
+# Prediction Tab - Predict and Update the Result Cards 
 
 @app.callback(
     [dash.dependencies.Output('svm_result', 'children'),
@@ -220,12 +215,16 @@ def predict_churn(n_clicks, ft_gender, ft_partner, ft_dependents, ft_phoneServic
     [State("navbar-collapse", "is_open")],
 )
 
-# we use a callback to toggle the collapse on small screens
+# Navbar Toggle Callback for Mobile Devices
+
 def toggle_navbar_collapse(n, is_open):
     if n:
         return not is_open
     return is_open
 
+#-------------------------------------------------------------------------------
+# MAIN FUNCTION
+#-------------------------------------------------------------------------------
 
 if __name__ == "__main__":
     app.run_server(debug=True, port=8050)
